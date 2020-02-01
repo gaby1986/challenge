@@ -10,13 +10,21 @@ async function weatherPlace(city) {
     return response_body;
 }
 
-router.post('/:city', async (req,res) =>{
-        console.log("Parametros " + req.params.city)
-        weatherPlace(req.params.city).then(function(results) {
+
+router.get('/:city', async (req,res) =>{
+            weatherPlace(req.params.city).then(function(results) {
+                res.json(JSON.parse(results))
+            });
+})
+router.get('/', async (req,res) =>{
+    ipapi.location(callback =>{
+        weatherPlace(callback.city).then(function(results) {
             res.json(JSON.parse(results))
         });
-
+       
+    })
 })
+
 
 
 module.exports = router;

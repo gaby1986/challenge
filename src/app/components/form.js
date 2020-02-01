@@ -4,14 +4,14 @@ class AdminWeather extends Component {
     constructor(){
         super()
         this.state = {
-            city: ''
+            city: ""
         }
         this.handleChange = this.handleChange.bind(this)
         this.getWeather = this.getWeather.bind(this)
     }
     getWeather(e){
-        fetch(`http://localhost:3000/current/${this.state.city}`,{
-            method: 'post',
+        fetch(`http://localhost:3000/v1/current/${this.state.city}`,{
+            method: 'get',
             headers:{
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',

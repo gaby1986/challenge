@@ -1,6 +1,7 @@
 import React, {Component} from  'react'
 import Info from './info';
-import axios from 'axios'
+import axios from 'axios';
+import { apiWeather } from '../env_url'
 
 class AdminWeather extends Component {
     constructor(){
@@ -16,30 +17,15 @@ class AdminWeather extends Component {
             current: false
         }
         this.handleChange = this.handleChange.bind(this)
-        this.getWeather = this.getWeather.bind(this)
         this.currentWeather = this.currentWeather.bind(this)
+        this.stopRecet = this.stopRecet.bind(this)
     }
     
-    currentWeather(){
-        axios(`http://localhost:3000/v1/current`).then(data => {
-            console.log(data)
-            var result = data.data
-            this.setState({
-                temperature: result.main.temp,
-                description: result.weather[0].description,
-                humidity: result.main.humidity,
-                wind_speed: result.wind.speed,
-                city: result.name,
-                country: result.sys.country,
-                error: null
-            }); 
-        })
-        .catch(err => console.log(err))
-    }
     
-    getWeather(e){
+    currentWeather(url){
         console.log(this.state.city)
-        axios(`http://localhost:3000/v1/current/${this.state.city}`).then(data => {
+        console.log(url)
+        axios(`${url}/${this.state.city}`).then(data => {
             console.log(data)
             var result = data.data
             this.setState({
@@ -53,7 +39,7 @@ class AdminWeather extends Component {
             }); 
         })
         .catch(err => console.log(err))
-        e.preventDefault()        
+                
     }
 
     handleChange(e){
@@ -64,13 +50,17 @@ class AdminWeather extends Component {
      }
 
      componentDidMount(){
-         this.currentWeather()
+        this.currentWeather(apiWeather.LOCATION)
+    }
+     
+     stopRecet(e){
+         e.preventDefault()
      }
 
     render() {
         return(
             <div className="card card-body">
-                <form onSubmit={this.getWeather}>
+                <form onSubmit={this.stopRecet} >
                     <div className="form-group">
                         <input type="text" onChange={this.handleChange} name="city" placeholder="Ciudad" className="form-control" value={this.state.city} />
                     </div>
@@ -78,7 +68,7 @@ class AdminWeather extends Component {
                         <input type="checkbox" className="form-check-input" id="exampleCheck1" />
                         <label className="form-check-label" htmlFor="exampleCheck1">Estado del tiempo a 5 días</label>
                     </div>
-                    <button type="submit" className="btn btn-success btn-block">
+                    <button type="submit" onClick={() => this.currentWeather(apiWeather.CURRENT)}  className="btn btn-success btn-block">
                         Obtener clima
                     </button>
                     

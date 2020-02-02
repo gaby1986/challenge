@@ -2,10 +2,25 @@ var express = require('express');
 var app = express();
 var Cors = require('cors')
 var bodyParser = require('body-parser');
-let weatherLocation = require('./routes/weatherLocation')
+var should = require('should');
  
+(5).should.be.exactly(5).and.be.a.Number(); 
 
 
+var user = {
+  name: 'tj',
+  pets: ['tobi', 'loki', 'jane', 'band', 'sdfdsf']
+};
+
+user.should.have.property('name', 'tj');
+user.should.have.property('pets').with.lengthOf(5);
+
+// If the object was created with Object.create(null)
+// then it doesn't inherit `Object.prototype`, so it will not have `.should` getter
+// so you can do:
+var test = should(user).have.property('name', 'tj');
+
+console.log(test)
 
 app.use(bodyParser.json())
 app.use(Cors())

@@ -20,10 +20,13 @@ class AdminWeather extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.currentWeather = this.currentWeather.bind(this)
         this.stopRecet = this.stopRecet.bind(this)
+        this.test = this.test.bind(this)
+
     }
     
     
     currentWeather(url){
+        console.log(this.state.city)
         axios(`${url}/${this.state.city}`).then(data => {
             var result = ""
             var myArray = ""
@@ -64,7 +67,11 @@ class AdminWeather extends Component {
      stopRecet(e){
          e.preventDefault()
      }
-
+     test(){
+        this.currentWeather(apiWeather.CURRENT)
+        this.currentWeather(apiWeather.FORECAST)
+        
+     }
     render() {
         return(
             <div className="card card-body">
@@ -72,19 +79,24 @@ class AdminWeather extends Component {
                     <div className="form-group">
                         <input type="text" onChange={this.handleChange} name="city" placeholder="Ciudad" className="form-control" value={this.state.city} />
                     </div>
-                    <button type="submit" onClick={() => this.currentWeather(apiWeather.CURRENT), () => this.currentWeather(apiWeather.FORECAST)}  className="btn btn-success btn-block">
+                    <div className="form-group form-check">
+                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                        <label className="form-check-label" htmlFor="exampleCheck1">Estado del tiempo a 5 días</label>
+                    </div>
+                    <button type="submit" onClick={this.test}  className="btn btn-success btn-block">
                         Obtener clima
                     </button>       
                 </form>
                 <Info {...this.state}></Info>
                 {
-                    
+                this.state.forecast ?
                     this.state.forecast.map((index, item) =>{
                         console.log(index)
                         return(
                             <ForecastInfo key={`1${item}`} date={index.dt_txt} temperature={index.main.temp}></ForecastInfo>
                         );
-                    })
+                    }):
+                    <div></div>
 
                 }
             </div>

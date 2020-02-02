@@ -36,14 +36,13 @@ class AdminWeather extends Component {
                     wind_speed: result.wind.speed,
                     city: result.name,
                     country: result.sys.country,
+                    forecast: [],
                     error: null
                 });
             }else if(url == apiWeather.FORECAST){
                 myArray = data.data.list
                 this.setState({forecast:myArray})
-            }
-            console.log(this.state)
-                
+            }                
         })
         .catch(err => console.log(err))
                 
@@ -51,6 +50,7 @@ class AdminWeather extends Component {
 
     handleChange(e){
         const {name, value} = e.target;
+        console.log(value)
         this.setState({
             [name]: value
         });
@@ -72,21 +72,17 @@ class AdminWeather extends Component {
                     <div className="form-group">
                         <input type="text" onChange={this.handleChange} name="city" placeholder="Ciudad" className="form-control" value={this.state.city} />
                     </div>
-                    <div className="form-group form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                        <label className="form-check-label" htmlFor="exampleCheck1">Estado del tiempo a 5 días</label>
-                    </div>
-                    <button type="submit" onClick={() => this.currentWeather(apiWeather.CURRENT)}  className="btn btn-success btn-block">
+                    <button type="submit" onClick={() => this.currentWeather(apiWeather.CURRENT), () => this.currentWeather(apiWeather.FORECAST)}  className="btn btn-success btn-block">
                         Obtener clima
                     </button>       
                 </form>
                 <Info {...this.state}></Info>
                 {
                     
-                    this.state.forecast.map(index =>{
+                    this.state.forecast.map((index, item) =>{
                         console.log(index)
                         return(
-                            <ForecastInfo key={index.dt} date={index.dt_txt} temperature={index.main.temp}></ForecastInfo>
+                            <ForecastInfo key={`1${item}`} date={index.dt_txt} temperature={index.main.temp}></ForecastInfo>
                         );
                     })
 

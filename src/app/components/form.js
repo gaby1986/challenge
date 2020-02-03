@@ -50,7 +50,6 @@ class AdminWeather extends Component {
     forecastWeather(url){
         axios(`${url}/${this.state.city}`).then(data => {
             this.myArray = data.data.list
-            console.log("dasd " + this.myArray)
             this.setState({forecast:this.myArray, test:true})
         }).catch(err => console.log(err))
                 
@@ -88,10 +87,6 @@ class AdminWeather extends Component {
                     <div className="form-group">
                         <input type="text" onChange={this.handleChange} name="city" placeholder="Ciudad" className="form-control" value={this.state.city} />
                     </div>
-                    <div className="form-group form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                        <label className="form-check-label" htmlFor="exampleCheck1">Estado del tiempo a 5 días</label>
-                    </div>
                     <button type="submit" onClick={() => this.currentWeather(apiWeather.CURRENT)}  className="btn btn-success btn-block">
                         Obtener clima
                     </button>       
@@ -101,9 +96,12 @@ class AdminWeather extends Component {
                 {
                     this.state.test?
                     this.state.forecast.map((index,item) =>{
-                        console.log(index)
+                    
+                       var test2 = index.weather.map(index2=>{
+                            return index2.icon
+                        })
                         return(
-                            <ForecastInfo key={item} date={index.dt_txt} temperature={index.main.temp}></ForecastInfo>
+                            <ForecastInfo key={item} date={index.dt_txt} temperature={index.main.temp} icon={test2}></ForecastInfo>
                         )
                     }):
                     <div></div>

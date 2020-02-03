@@ -6,18 +6,25 @@ const ForecastInfo = props => {
             
             {props.temperature ?
                 <div className="card card-body mt-2 animated fadeInUp" >
-                     {
-                        props.date &&
-                        <p><i className="fas fa-location-arrow"></i> Fecha: {props.date}</p>
-                    }
-                     {
-                        props.city &&
-                        <p><i className="fas fa-location-arrow"></i> Locación: {props.city}</p>
-                    }
-                    {
-                        props.temperature &&
-                        <p><i className="fas fa-temperature-low"></i> Temperatura: {props.temperature} ℃</p>
-                    }
+                     <div className="row">
+                        <div className="col">
+                            {
+                                props.date &&
+                                <p><i className="fas fa-location-arrow"></i> Fecha: {props.date}</p>
+                            }
+                            {
+                                props.city &&
+                                <p><i className="fas fa-location-arrow"></i> Locación: {props.city}</p>
+                            }
+                            {
+                                props.temperature &&
+                                <p><i className="fas fa-temperature-low"></i> Temperatura: {props.temperature} ℃</p>
+                            }
+                        </div>
+                        <div className="col text-center">
+                            <img src={`https://openweathermap.org/img/wn/${props.icon}.png`}></img>
+                        </div>
+                    </div>
                     
                 </div>
                 :

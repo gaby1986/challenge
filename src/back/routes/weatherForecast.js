@@ -17,7 +17,8 @@ router.get('/:city', async (req,res) =>{
     }).catch(function(error){
         res.json(error)
     });
-}).get('/', async (req,res) =>{
+})
+router.get('/', async (req,res) =>{
     ipapi.location(callback =>{
         getWeather(callback.city).then(function(results) {
             res.json(JSON.parse(results))

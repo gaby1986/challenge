@@ -18,7 +18,7 @@ const ForecastInfo = props => {
                             }
                             {
                                 props.temperature &&
-                                <p><i className="fas fa-temperature-low"></i> Temperatura: {props.temperature} ℃</p>
+                                <p><i className="fas fa-temperature-low"></i> Temperatura: <span className="temp"><strong>{props.temperature} ℃ </strong></span></p>
                             }
                         </div>
                         <div className="col text-center">

@@ -14,6 +14,7 @@ class AdminWeather extends Component {
             city: '',
             country: '',
             forecast:[],
+            icon: "",
             test:false,
             error: null,
         }
@@ -37,6 +38,7 @@ class AdminWeather extends Component {
                     city: result.name,
                     country: result.sys.country,
                     forecast: [],
+                    icon: result.weather[0].icon,
                     test:false,
                     error: null
                 });
@@ -92,7 +94,8 @@ class AdminWeather extends Component {
                     </button>       
                 </form>
                 <Info {...this.state}></Info>
-                
+                <div className="contentExtendido">
+                <h4>Pronostico extendido a 5 días</h4>
                 {
                     this.state.test?
                     this.state.forecast.map((index,item) =>{
@@ -106,6 +109,7 @@ class AdminWeather extends Component {
                     }):
                     <div></div>
                 }
+                </div>
             </div>
         );
     }

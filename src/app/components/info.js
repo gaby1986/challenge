@@ -3,13 +3,13 @@ import React from 'react';
 const WeatherInfo = props => {
     return (
         <div className="contentActual">
-            <h3>Hoy</h3>
             {
                 props.error &&
                 <div className="alert alert-danger">
                     <p>{props.error}</p>
                 </div>
             }
+            <h3>Hoy</h3>
             {props.temperature ?
                 <div className="card card-body mt-2 animated fadeInUp" >
                      <div className="row">

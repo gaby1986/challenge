@@ -50,7 +50,12 @@ class AdminWeather extends Component {
                 });
                           
         })
-        .catch(err => console.log(err))
+        .catch(err =>{
+            this.setState({
+                error: 'Por favor ingresar una ciudad '
+            });
+
+        } )
                 
     }
 
@@ -65,7 +70,6 @@ class AdminWeather extends Component {
 
     handleChange(e){
         const {name, value} = e.target;
-        console.log(value)
         this.setState({
             [name]: value
         });

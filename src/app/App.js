@@ -34,9 +34,9 @@ class AdminWeather extends Component {
     currentWeather(url){
         axios(`${url}/${this.state.city}`).then(data => {
                var  result = data.data
-               console.log(result)
+               var dateState = this.timeConverter(result.dt)
                 this.setState({
-                    timezone: result.dt,
+                    timezone: dateState,
                     temperature: result.main.temp,
                     description: result.weather[0].description,
                     humidity: result.main.humidity,
@@ -94,10 +94,8 @@ class AdminWeather extends Component {
         var year = a.getFullYear();
         var month = months[a.getMonth()];
         var date = a.getDate();
-        var hour = a.getHours();
-        var min = a.getMinutes();
-        var sec = a.getSeconds();
-        var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+        
+        var time = date + ' ' + month + ' ' + year ;
         return time;
       }
 
@@ -114,18 +112,20 @@ class AdminWeather extends Component {
                 </Formweather>
                 <Info {...this.state}></Info>
                 <div className="contentExtendido">
-                    <h4>Pronostico extendido a 5 días</h4>
+                    <h5>Pronostico extendido a 5 días de {this.state.city}</h5>
                     {
                         this.state.test?
                         this.state.forecast.map((index,item) =>{
                         var date = this.timeConverter(index.dt)
-                       
-                       var test2 = index.weather.map(index2=>{
+                            var iconWeather = index.weather.map(index2=>{
                                 return index2.icon
                             })
+                         if(item > 0){
                             return(
-                                <ForecastInfo key={item} date={date} temperature={index.temp.day} icon={test2}></ForecastInfo>
+                                <ForecastInfo key={item} date={date} temperature={index.temp.day} icon={iconWeather}></ForecastInfo>
                             )
+                        }
+      
                         }):
                         <div></div>
                     }

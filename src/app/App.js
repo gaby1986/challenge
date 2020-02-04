@@ -9,6 +9,7 @@ class AdminWeather extends Component {
     constructor(){
         super()
         this.state = {
+            timezone: '',
             temperature: '',
             description: '',
             humidity: '',
@@ -25,6 +26,7 @@ class AdminWeather extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.currentWeather = this.currentWeather.bind(this)
         this.forecastWeather = this.forecastWeather.bind(this)
+        this.timeConverter = this.timeConverter.bind(this)
         this.stopRecet = this.stopRecet.bind(this)
     }
     
@@ -32,7 +34,9 @@ class AdminWeather extends Component {
     currentWeather(url){
         axios(`${url}/${this.state.city}`).then(data => {
                var  result = data.data
+               console.log(result)
                 this.setState({
+                    timezone: result.dt,
                     temperature: result.main.temp,
                     description: result.weather[0].description,
                     humidity: result.main.humidity,
@@ -83,6 +87,19 @@ class AdminWeather extends Component {
      stopRecet(e){
          e.preventDefault()
      }
+     
+     timeConverter(UNIX_timestamp){
+        var a = new Date(UNIX_timestamp * 1000);
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+        return time;
+      }
 
     render() {
         return(
@@ -101,12 +118,13 @@ class AdminWeather extends Component {
                     {
                         this.state.test?
                         this.state.forecast.map((index,item) =>{
-                        
-                        var test2 = index.weather.map(index2=>{
+                        var date = this.timeConverter(index.dt)
+                       
+                       var test2 = index.weather.map(index2=>{
                                 return index2.icon
                             })
                             return(
-                                <ForecastInfo key={item} date={index.dt_txt} temperature={index.main.temp} icon={test2}></ForecastInfo>
+                                <ForecastInfo key={item} date={date} temperature={index.temp.day} icon={test2}></ForecastInfo>
                             )
                         }):
                         <div></div>

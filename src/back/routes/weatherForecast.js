@@ -6,7 +6,7 @@ var ipapi = require('ipapi.co');
 
  
 async function getWeather(city) {
-   var url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=a4976c7112b0610423f6ca0a17b12d33&units=metric&cnt=5`
+   var url = `http://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&appid=a4976c7112b0610423f6ca0a17b12d33&units=metric&cnt=5`
    var response_body = await request(url);
    return response_body;
 }
